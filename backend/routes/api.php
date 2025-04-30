@@ -3,8 +3,12 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\InstructorController;
+// use App\Http\Controllers\AdminController;
+// use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Instructor\InstructorController;
+use App\Http\Controllers\Instructor\CourseController;
+use App\Http\Controllers\Instructor\BlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,4 +67,25 @@ Route::prefix('instructors')->middleware(['auth:sanctum', 'ability:instructor'])
     // Instructor specific routes
     Route::get('instructors/{instructor}/courses', [InstructorController::class, 'getCourses']);
     Route::get('instructors/{instructor}/blogs', [InstructorController::class, 'getBlogs']);
+
+    // Course management routes
+    Route::prefix('courses')->group(function () {
+        Route::get('/', [CourseController::class, 'index']);
+        Route::post('/', [CourseController::class, 'store']);
+        Route::get('/{course}', [CourseController::class, 'show']);
+        Route::put('/{course}', [CourseController::class, 'update']);
+        Route::delete('/{course}', [CourseController::class, 'destroy']);
+        Route::put('/{course}/toggle-published', [CourseController::class, 'togglePublished']);
+    });
+    
+    // Blog management routes
+    Route::prefix('blogs')->group(function () {
+        Route::get('/', [BlogController::class, 'index']);
+        Route::post('/', [BlogController::class, 'store']);
+        Route::get('/{blog}', [BlogController::class, 'show']);
+        Route::put('/{blog}', [BlogController::class, 'update']);
+        Route::delete('/{blog}', [BlogController::class, 'destroy']);
+        Route::put('/{blog}/schedule', [BlogController::class, 'schedule']);
+        Route::put('/{blog}/publish-now', [BlogController::class, 'publishNow']);
+    });
 });
