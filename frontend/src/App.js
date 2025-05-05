@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import InstructorLogin from "./Components/Instructors/Auth/Login";
+import Profile from "./Components/Instructors/Profile";
+import Footer from "./Components/Layouts/Instructors/Footer";
+import InstructorSidebar from "./Components/Layouts/Instructors/Sidebar";
+import Navbar from "./Components/Layouts/Instructors/Navbar";
+import AllCourses from "./Components/Instructors/Courses/Index";
+import NotFound from "./Components/404PageNotFound/NotFound";
+import InstructorCreateCourse from "./Components/Instructors/Courses/Create";
+import InstructorEditCourse from "./Components/Instructors/Courses/Edit";
+import InstructorViewCourse from "./Components/Instructors/Courses/View";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <Routes>
+          {/* <Route path="/" element={<></>}></Route> */}
+          <Route path="/instructor/login" element={<InstructorLogin />}></Route>
+          <Route path="/instructor/profile" element={<Profile />}></Route>
+          <Route path="/instructor/courses" element={<AllCourses />}></Route>
+          <Route path="/instructor/courses/view/:id" element={<InstructorViewCourse />}></Route>
+          <Route path="/instructor/courses/create" element={<InstructorCreateCourse />}></Route>
+          <Route path="/instructor/courses/edit/:id" element={<InstructorEditCourse />}></Route>
+          <Route path="*" element={<NotFound />}></Route>
+        </Routes>
+        {/* <Navbar /> */}
+        {/* <InstructorSidebar /> */}
+        <Footer/>
+      </div>
+    </Router>
   );
 }
 

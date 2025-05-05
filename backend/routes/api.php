@@ -6,6 +6,9 @@ use App\Http\Controllers\UserController;
 // use App\Http\Controllers\AdminController;
 // use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\UserManagementController;
+use App\Http\Controllers\Admin\ContentManagementController;
+use App\Http\Controllers\Admin\SubscriptionManagementController;
 use App\Http\Controllers\Instructor\InstructorController;
 use App\Http\Controllers\Instructor\CourseController;
 use App\Http\Controllers\Instructor\BlogController;
@@ -50,8 +53,39 @@ Route::prefix('admins')->middleware(['auth:sanctum', 'ability:admin'])->group(fu
     // Admin resource routes
     Route::apiResource('admins', AdminController::class);
     
-    // Admin specific routes
-    Route::put('instructors/{instructor}/verify', [InstructorController::class, 'toggleVerification']);
+    // User Management routes
+    Route::prefix('users-management')->group(function () {
+        Route::get('/users', [UserManagementController::class, 'listUsers']);
+        Route::get('/users/{id}', [UserManagementController::class, 'getUserDetails']);
+        // Route::put('/users/{id}/toggle-status', [UserManagementController::class, 'toggleUserStatus']);
+        
+        Route::get('/instructors', [UserManagementController::class, 'listInstructors']);
+        Route::get('/instructors/{id}', [UserManagementController::class, 'getInstructorDetails']);
+        Route::put('/instructors/{id}/toggle-verification', [UserManagementController::class, 'toggleInstructorVerification']);
+    });
+    
+    // Content Management routes
+    Route::prefix('content-management')->group(function () {
+        Route::get('/courses', [ContentManagementController::class, 'listCourses']);
+        Route::get('/courses/{id}', [ContentManagementController::class, 'getCourseDetails']);
+        Route::put('/courses/{id}/toggle-publication', [ContentManagementController::class, 'toggleCoursePublicationStatus']);
+        Route::delete('/courses/{id}', [ContentManagementController::class, 'deleteCourse']);
+        
+        Route::get('/blogs', [ContentManagementController::class, 'listBlogs']);
+        Route::get('/blogs/{id}', [ContentManagementController::class, 'getBlogDetails']);
+        Route::delete('/blogs/{id}', [ContentManagementController::class, 'deleteBlog']);
+    });
+    
+    // Subscription Management routes
+    Route::prefix('subscription-management')->group(function () {
+        Route::get('/types', [SubscriptionManagementController::class, 'listSubscriptionTypes']);
+        Route::post('/types', [SubscriptionManagementController::class, 'storeSubscriptionType']);
+        Route::put('/types/{id}', [SubscriptionManagementController::class, 'updateSubscriptionType']);
+        // Route::put('/types/{id}/toggle-status', [SubscriptionManagementController::class, 'toggleSubscriptionTypeStatus']);
+        
+        Route::get('/subscriptions', [SubscriptionManagementController::class, 'listSubscriptions']);
+        Route::get('/revenue-stats', [SubscriptionManagementController::class, 'getRevenueStats']);
+    });
 });
 
 // Instructor routes (protected)
