@@ -65,7 +65,7 @@ function Profile() {
                     <div className="row mb-4">
                         <div className="col-12">
                             <div className="card border-0 shadow-sm overflow-hidden">
-                                <div className="bg-primary text-white p-4">
+                                <div className="bg-dark bg-gradient text-white p-4">
                                     <div className="d-flex align-items-center">
                                         <i className="fas fa-user-circle fs-1 me-3"></i>
                                         <h1 className="m-0 fs-3 fw-bold">Instructor Profile</h1>

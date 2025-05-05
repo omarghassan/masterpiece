@@ -9,6 +9,10 @@ import NotFound from "./Components/404PageNotFound/NotFound";
 import InstructorCreateCourse from "./Components/Instructors/Courses/Create";
 import InstructorEditCourse from "./Components/Instructors/Courses/Edit";
 import InstructorViewCourse from "./Components/Instructors/Courses/View";
+import InstructorAllBlogs from "./Components/Instructors/Blogs/Index";
+import InstructorViewBlog from "./Components/Instructors/Blogs/View";
+import InstructorCreateBlog from "./Components/Instructors/Blogs/Create";
+import InstructorEditBlog from "./Components/Instructors/Blogs/Edit";
 
 function App() {
   return (
@@ -22,6 +26,13 @@ function App() {
           <Route path="/instructor/courses/view/:id" element={<InstructorViewCourse />}></Route>
           <Route path="/instructor/courses/create" element={<InstructorCreateCourse />}></Route>
           <Route path="/instructor/courses/edit/:id" element={<InstructorEditCourse />}></Route>
+
+          {/* Instructor Blogs Routes */}
+          <Route path="/instructor/blogs" element={<InstructorAllBlogs />}></Route>
+          <Route path="/instructor/blogs/view/:id" element={<InstructorViewBlog />}></Route>
+          <Route path="/instructor/blogs/create" element={<InstructorCreateBlog />}></Route>
+          <Route path="/instructor/blogs/edit/:id" element={<InstructorEditBlog />}></Route>
+
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
         {/* <Navbar /> */}

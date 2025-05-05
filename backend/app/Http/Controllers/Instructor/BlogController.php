@@ -35,7 +35,7 @@ class BlogController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
-            'content' => 'required|string',
+            'content' => 'required|json',
             'thumbnail' => 'nullable|image|max:2048',
             'published_at' => 'nullable|date',
         ]);
