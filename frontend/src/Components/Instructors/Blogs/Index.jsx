@@ -312,7 +312,7 @@ function InstructorAllBlogs() {
                                             <th scope="col">Title</th>
                                             <th scope="col" className="text-center">Content</th>
                                             <th scope="col" className="text-center" style={{ width: '120px' }}>Created</th>
-                                            <th scope="col" className="text-end pe-4" style={{ width: '180px' }}>Actions</th>
+                                            <th scope="col" className="text-center" style={{ width: '180px' }}>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>

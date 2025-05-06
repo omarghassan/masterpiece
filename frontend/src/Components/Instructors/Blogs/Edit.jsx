@@ -26,7 +26,7 @@ export default function InstructorEditBlog() {
             try {
                 const token = localStorage.getItem('token');
                 if (!token) throw new Error('Authentication token not found');
-
+    
                 const response = await axios.get(
                     `http://127.0.0.1:8000/api/instructors/blogs/${id}`,
                     {
@@ -36,7 +36,7 @@ export default function InstructorEditBlog() {
                         }
                     }
                 );
-
+    
                 const blogData = response.data;
                 
                 // Parse content if it's a string
@@ -65,7 +65,7 @@ export default function InstructorEditBlog() {
                 setIsLoading(false);
             }
         };
-
+    
         fetchBlogData();
     }, [id]);
 
@@ -139,18 +139,23 @@ export default function InstructorEditBlog() {
             setErrors(formErrors);
             return;
         }
-
+    
         setIsSubmitting(true);
         setSubmitError('');
-
+    
         try {
             const token = localStorage.getItem('token');
+            if (!token) throw new Error('Authentication token not found');
+            
             const formPayload = new FormData();
-
+    
             formPayload.append('title', formData.title);
             
             // Ensure content is properly stringified JSON
-            const contentToSend = JSON.stringify(formData.content);
+            const contentToSend = typeof formData.content === 'string' 
+                ? formData.content 
+                : JSON.stringify(formData.content);
+                
             formPayload.append('content', contentToSend);
             
             if (formData.featuredImage) {
@@ -159,9 +164,18 @@ export default function InstructorEditBlog() {
                 // If using existing image, we need to tell the backend
                 formPayload.append('keep_existing_image', '1');
             }
-
-            await axios.put(
-                `http://127.0.0.1:8000/api/instructors/blogs/${id}`,
+    
+            // Log what we're sending for debugging
+            console.log('Submitting with payload:', {
+                title: formData.title,
+                contentType: typeof formData.content,
+                hasImage: !!formData.featuredImage,
+                keepExisting: !!formData.existingFeaturedImage
+            });
+    
+            // Use the correct HTTP method for updating
+            const response = await axios.post(
+                `http://127.0.0.1:8000/api/instructors/blogs/${id}?_method=PUT`,
                 formPayload,
                 {
                     headers: {
@@ -171,10 +185,15 @@ export default function InstructorEditBlog() {
                 }
             );
             
+            console.log('Update response:', response.data);
             setSubmitSuccess(true);
             setTimeout(() => navigate('/instructor/blogs'), 1500);
         } catch (error) {
-            setSubmitError(error.response?.data?.message || 'Failed to update blog post. Please try again.');
+            console.error('Update error:', error);
+            setSubmitError(
+                error.response?.data?.message || 
+                `Failed to update blog post (${error.message}). Please try again.`
+            );
         } finally {
             setIsSubmitting(false);
         }

@@ -18,12 +18,15 @@ const EditorComponent = ({ data, onChange }) => {
       instanceRef.current = null;
     }
 
+    console.log("EditorJS initializing with data:", data);
+
     // Parse data if it's a string
     let parsedData = data;
     if (typeof data === 'string') {
       try {
         parsedData = JSON.parse(data);
       } catch (e) {
+        console.error("Failed to parse editor data:", e);
         parsedData = { blocks: [] };
       }
     }
@@ -57,6 +60,7 @@ const EditorComponent = ({ data, onChange }) => {
         image: {
           class: ImageTool,
           config: {
+            // This would be your Laravel API endpoint for image uploads
             endpoints: {
               byFile: '/api/upload-image', 
             }
@@ -67,11 +71,16 @@ const EditorComponent = ({ data, onChange }) => {
       onChange: async () => {
         try {
           const savedData = await editor.save();
+          console.log("Editor data saved:", savedData);
           onChange(savedData);
         } catch (e) {
           console.error('Editor.js save error:', e);
         }
-      }
+      },
+      onReady: () => {
+        console.log('Editor.js is ready to work!');
+      },
+      logLevel: 'ERROR'
     });
 
     // Store the instance
@@ -79,14 +88,15 @@ const EditorComponent = ({ data, onChange }) => {
 
     // Clean up on unmount
     return () => {
+      // Check if the editor has the destroy method before calling it
       if (instanceRef.current && typeof instanceRef.current.destroy === 'function') {
         instanceRef.current.destroy();
       }
       instanceRef.current = null;
     };
-  }, [data]); // Re-initialize when data changes
+  }, []); // Note: We removed data from dependency array to prevent re-initialization
 
-  return <div id="editorjs" className="w-full min-h-64 p-4" />;
+  return <div id="editorjs" className="w-full border rounded-md min-h-64 p-4" />;
 };
 
 export default EditorComponent;
