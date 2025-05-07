@@ -1,38 +1,38 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import InstructorSidebar from '../Layouts/Instructors/Sidebar';
+import AdminSidebar from '../Layouts/Admins/Sidebar';
 
-function InstructorProfile() {
-    const [instructorData, setInstructorData] = useState(null);
+function AdminProfile() {
+    const [adminData, setAdminData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [activeTab, setActiveTab] = useState('bio');
 
     useEffect(() => {
-        const fetchInstructorData = async () => {
+        const fetchAdminData = async () => {
             try {
                 const token = localStorage.getItem('token');
                 if (!token) {
                     throw new Error('No authentication token found');
                 }
 
-                const response = await axios.get('http://127.0.0.1:8000/api/instructors/profile', {
+                const response = await axios.get('http://127.0.0.1:8000/api/admins/profile', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
                     },
                 });
 
-                setInstructorData(response.data);
+                setAdminData(response.data);
             } catch (error) {
                 setError(error.response?.data?.message || error.message);
-                console.error('Error fetching instructor data:', error);
+                console.error('Error fetching admin data:', error);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchInstructorData();
+        fetchAdminData();
     }, []);
 
     if (loading) return (
@@ -49,15 +49,15 @@ function InstructorProfile() {
         </div>
     );
 
-    if (!instructorData) return (
+    if (!adminData) return (
         <div className="alert alert-warning m-4 shadow-sm" role="alert">
-            <i className="fas fa-info-circle me-2"></i>No instructor data found
+            <i className="fas fa-info-circle me-2"></i>No admin data found
         </div>
     );
 
     return (
         <>
-            <InstructorSidebar />
+            <AdminSidebar />
             <div className="d-flex">
 
                 <div className="container-fluid py-4" style={{ marginLeft: '260px' }}>
@@ -68,7 +68,7 @@ function InstructorProfile() {
                                 <div className="bg-dark bg-gradient text-white p-4">
                                     <div className="d-flex align-items-center">
                                         <i className="fas fa-user-circle fs-1 me-3"></i>
-                                        <h1 className="m-0 fs-3 fw-bold">Instructor Profile</h1>
+                                        <h1 className="m-0 fs-3 fw-bold">Admin Profile</h1>
                                     </div>
                                 </div>
                             </div>
@@ -90,8 +90,8 @@ function InstructorProfile() {
                                                 background: '#f8f9fa'
                                             }}>
                                             <img
-                                                src={instructorData.profile_image || 'https://via.placeholder.com/150'}
-                                                alt={instructorData.name}
+                                                src={adminData.profile_image || 'https://via.placeholder.com/150'}
+                                                alt={adminData.name}
                                                 style={{
                                                     width: '100%',
                                                     height: '100%',
@@ -101,10 +101,10 @@ function InstructorProfile() {
                                         </div>
                                     </div>
 
-                                    <h2 className="fw-bold mb-1">{instructorData.name || 'No Data Available'}</h2>
+                                    <h2 className="fw-bold mb-1">{adminData.name || 'No Data Available'}</h2>
                                     <div className="mb-3">
                                         <span className="badge bg-primary px-3 py-2">
-                                            {instructorData.expertise || 'No Data Available'}
+                                            {adminData.expertise || 'No Data Available'}
                                         </span>
                                     </div>
 
@@ -132,12 +132,12 @@ function InstructorProfile() {
 
                                     <div className="d-flex align-items-center mb-3">
                                         <i className="fas fa-envelope text-muted me-3"></i>
-                                        <span>{instructorData.email || 'Not provided'}</span>
+                                        <span>{adminData.email || 'Not provided'}</span>
                                     </div>
 
                                     <div className="d-flex align-items-center">
                                         <i className="fas fa-phone text-muted me-3"></i>
-                                        <span>{instructorData.phone || 'Not provided'}</span>
+                                        <span>{adminData.phone || 'Not provided'}</span>
                                     </div>
                                 </div>
                             </div>
@@ -178,7 +178,7 @@ function InstructorProfile() {
                                                     About Me
                                                 </h3>
                                                 <p>
-                                                    {instructorData.instructor_bio || 'No Data Available'}
+                                                    {adminData.admin_bio || 'No Data Available'}
                                                 </p>
                                             </div>
 
@@ -188,7 +188,7 @@ function InstructorProfile() {
                                                 Education
                                             </h3>
                                             <p className="text-muted fst-italic">
-                                                {instructorData.education || 'No education details provided yet.'}
+                                                {adminData.education || 'No education details provided yet.'}
                                             </p>
                                         </div> */}
                                         </>
@@ -201,13 +201,13 @@ function InstructorProfile() {
                                                 Areas of Expertise
                                             </h3>
                                             <p>
-                                                {instructorData.expertise || 'Leadership'}
+                                                {adminData.expertise || 'Leadership'}
                                             </p>
 
                                             <div className="mt-4">
                                                 <h4 className="fs-6 fw-bold mb-3">Key Skills</h4>
                                                 <div className="d-flex flex-wrap gap-2">
-                                                    {(instructorData.expertise || 'Leadership').split(',').map((skill, index) => (
+                                                    {(adminData.expertise || 'Leadership').split(',').map((skill, index) => (
                                                         <span key={index} className="badge bg-light text-dark border px-3 py-2">
                                                             {skill.trim()}
                                                         </span>
@@ -224,9 +224,9 @@ function InstructorProfile() {
                                                 My Courses
                                             </h3>
 
-                                            {instructorData.courses && instructorData.courses.length > 0 ? (
+                                            {adminData.courses && adminData.courses.length > 0 ? (
                                                 <div className="row g-3">
-                                                    {instructorData.courses.map((course, index) => (
+                                                    {adminData.courses.map((course, index) => (
                                                         <div key={index} className="col-md-6">
                                                             <div className="card h-100 border-0 shadow-sm">
                                                                 <div className="card-body">
@@ -267,4 +267,4 @@ function InstructorProfile() {
     );
 }
 
-export default InstructorProfile;
+export default AdminProfile;

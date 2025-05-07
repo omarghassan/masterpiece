@@ -63,7 +63,7 @@ class UserManagementController extends Controller
         $query->orderBy($sortBy, $sortDir);
 
         // Get paginated results
-        $users = $query->paginate(15);
+        $users = $query->withCount(['subscriptions', 'progress'])->paginate(15);
 
         return response()->json($users);
     }
@@ -83,7 +83,7 @@ class UserManagementController extends Controller
     }
 
     /**
-     * Block/unblock a user account.
+     * Toggle user account status.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -108,6 +108,30 @@ class UserManagementController extends Controller
         return response()->json([
             'message' => "User account has been {$status} successfully",
             'user' => $user
+        ]);
+    }
+
+    /**
+     * Delete a user and all associated data.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteUser($id)
+    {
+        $user = User::findOrFail($id);
+        
+        // Delete associated subscriptions
+        $user->subscriptions()->delete();
+        
+        // Delete associated progress
+        $user->progress()->delete();
+        
+        // Delete the user
+        $user->delete();
+
+        return response()->json([
+            'message' => 'User and all associated data have been deleted successfully'
         ]);
     }
 

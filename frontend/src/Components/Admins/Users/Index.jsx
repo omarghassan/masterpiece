@@ -1,30 +1,29 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import AdminSidebar from '../../Layouts/Admins/Sidebar';
 
-import InstructorSidebar from '../../Layouts/Instructors/Sidebar';
-import './InstructorCourses.css'
 
-function InstructorAllCourses() {
-    const [instructorCourses, setInstructorCourses] = useState([]);
+function AdminViewAllUsers() {
+    const [adminAllUsers, setAdminAllUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [apiResponse, setApiResponse] = useState(null);
     const [deleteModal, setDeleteModal] = useState({
         show: false,
-        course: null,
+        user: null,
         isLoading: false,
         error: null
     });
 
     useEffect(() => {
-        const fetchInstructorCourses = async () => {
+        const fetchAllUSers = async () => {
             try {
                 const token = localStorage.getItem('token');
                 if (!token) {
                     throw new Error('No authentication token found');
                 }
 
-                const response = await axios.get('http://127.0.0.1:8000/api/instructors/courses', {
+                const response = await axios.get('http://127.0.0.1:8000/api/admins/users-management/users', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
@@ -33,25 +32,25 @@ function InstructorAllCourses() {
 
                 setApiResponse(response.data);
 
-                let coursesData;
+                let usersData;
 
                 if (Array.isArray(response.data)) {
-                    coursesData = response.data;
+                    usersData = response.data;
                 } else if (typeof response.data === 'object') {
-                    if (response.data.courses) {
-                        coursesData = response.data.courses;
+                    if (response.data.users) {
+                        usersData = response.data.users;
                     } else if (response.data.data) {
-                        coursesData = response.data.data;
+                        usersData = response.data.data;
                     } else if (response.data.results) {
-                        coursesData = response.data.results;
+                        usersData = response.data.results;
                     } else {
-                        coursesData = [];
+                        usersData = [];
                     }
                 } else {
-                    coursesData = [];
+                    usersData = [];
                 }
 
-                setInstructorCourses(Array.isArray(coursesData) ? coursesData : []);
+                setAdminAllUsers(Array.isArray(usersData) ? usersData : []);
             } catch (error) {
                 console.error('Error:', error);
 
@@ -67,51 +66,51 @@ function InstructorAllCourses() {
             }
         };
 
-        fetchInstructorCourses();
+        fetchAllUSers();
     }, []);
 
-    const handleDeleteCourse = (course) => {
+    const handleDeleteUser = (user) => {
         setDeleteModal({
             show: true,
-            course: course,
+            user: user,
             isLoading: false,
             error: null
         });
     };
 
-    const confirmDeleteCourse = async () => {
+    const confirmDeleteUser = async () => {
         try {
             setDeleteModal(prev => ({ ...prev, isLoading: true, error: null }));
-            
+
             const token = localStorage.getItem('token');
             if (!token) {
                 throw new Error('No authentication token found');
             }
 
-            await axios.delete(`http://127.0.0.1:8000/api/instructors/courses/${deleteModal.course.id}`, {
+            await axios.delete(`http://127.0.0.1:8000/api/admins/users-management/users/${deleteModal.user.id}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
             });
 
-            // Remove course from state
-            setInstructorCourses(prevCourses => 
-                prevCourses.filter(c => c.id !== deleteModal.course.id)
+            // Remove user from state
+            setAdminAllUsers(prevUsers =>
+                prevUsers.filter(c => c.id !== deleteModal.user.id)
             );
 
             // Close modal
             setDeleteModal({
                 show: false,
-                course: null,
+                user: null,
                 isLoading: false,
                 error: null
             });
 
         } catch (error) {
             console.error('Delete error:', error);
-            
-            let errorMessage = 'Failed to delete course';
+
+            let errorMessage = 'Failed to delete user';
             if (error.response) {
                 errorMessage = `Server error: ${error.response.status} - ${error.response.data.message || 'Unknown error'}`;
             } else if (error.request) {
@@ -119,19 +118,19 @@ function InstructorAllCourses() {
             } else {
                 errorMessage = error.message;
             }
-            
-            setDeleteModal(prev => ({ 
-                ...prev, 
-                isLoading: false, 
-                error: errorMessage 
+
+            setDeleteModal(prev => ({
+                ...prev,
+                isLoading: false,
+                error: errorMessage
             }));
         }
     };
 
-    const cancelDeleteCourse = () => {
+    const cancelDeleteUser = () => {
         setDeleteModal({
             show: false,
-            course: null,
+            user: null,
             isLoading: false,
             error: null
         });
@@ -141,20 +140,20 @@ function InstructorAllCourses() {
         if (!deleteModal.show) return null;
 
         return (
-            <div className="modal fade show" 
-                 style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} 
-                 tabIndex="-1">
+            <div className="modal fade show"
+                style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}
+                tabIndex="-1">
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content border-0 shadow">
                         <div className="modal-header bg-danger text-white">
                             <h5 className="modal-title">
                                 <i className="fas fa-exclamation-triangle me-2"></i>
-                                Delete Course
+                                Delete User
                             </h5>
-                            <button type="button" 
-                                    className="btn-close btn-close-white" 
-                                    onClick={cancelDeleteCourse}
-                                    disabled={deleteModal.isLoading}>
+                            <button type="button"
+                                className="btn-close btn-close-white"
+                                onClick={cancelDeleteUser}
+                                disabled={deleteModal.isLoading}>
                             </button>
                         </div>
                         <div className="modal-body p-4">
@@ -164,24 +163,24 @@ function InstructorAllCourses() {
                                     {deleteModal.error}
                                 </div>
                             )}
-                            <p className="mb-1">Are you sure you want to delete this course?</p>
-                            <p className="fw-bold mb-3">{deleteModal.course?.title}</p>
+                            <p className="mb-1">Are you sure you want to delete this user?</p>
+                            <p className="fw-bold mb-3">{deleteModal.user?.title}</p>
                             <div className="alert alert-warning mb-0">
                                 <i className="fas fa-info-circle me-2"></i>
-                                This action cannot be undone. All course content, including lessons and student enrollments, will be permanently removed.
+                                This action cannot be undone. All user content, including lessons and courses enrollments, will be permanently removed.
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" 
-                                    className="btn btn-secondary" 
-                                    onClick={cancelDeleteCourse}
-                                    disabled={deleteModal.isLoading}>
+                            <button type="button"
+                                className="btn btn-secondary"
+                                onClick={cancelDeleteUser}
+                                disabled={deleteModal.isLoading}>
                                 Cancel
                             </button>
-                            <button type="button" 
-                                    className="btn btn-danger" 
-                                    onClick={confirmDeleteCourse}
-                                    disabled={deleteModal.isLoading}>
+                            <button type="button"
+                                className="btn btn-danger"
+                                onClick={confirmDeleteUser}
+                                disabled={deleteModal.isLoading}>
                                 {deleteModal.isLoading ? (
                                     <>
                                         <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
@@ -190,7 +189,7 @@ function InstructorAllCourses() {
                                 ) : (
                                     <>
                                         <i className="fas fa-trash me-2"></i>
-                                        Delete Course
+                                        Delete User
                                     </>
                                 )}
                             </button>
@@ -204,7 +203,7 @@ function InstructorAllCourses() {
     if (loading) {
         return (
             <>
-                <InstructorSidebar />
+                <AdminSidebar />
                 <div className="container-fluid py-4" style={{ marginLeft: '260px' }}>
                     <div className="d-flex justify-content-center align-items-center" style={{ height: '50vh' }}>
                         <div className="spinner-border text-primary" style={{ width: '3rem', height: '3rem' }} role="status">
@@ -243,9 +242,9 @@ function InstructorAllCourses() {
                 </div>
 
                 <div className="mb-3">
-                    <h6 className="fw-bold mb-2">Parsed Courses:</h6>
+                    <h6 className="fw-bold mb-2">Parsed Users:</h6>
                     <pre className="bg-light p-3 rounded" style={{ maxHeight: '200px', overflow: 'auto' }}>
-                        {JSON.stringify(instructorCourses, null, 2)}
+                        {JSON.stringify(adminAllUsers, null, 2)}
                     </pre>
                 </div>
             </div>
@@ -254,7 +253,7 @@ function InstructorAllCourses() {
 
     return (
         <>
-            <InstructorSidebar />
+            <AdminSidebar />
             <div id="main-container" className="container-fluid py-4" style={{ marginLeft: '260px', maxWidth: 'calc(100% - 280px)' }}>
                 <div className="row mb-4">
                     <div className="col">
@@ -264,32 +263,26 @@ function InstructorAllCourses() {
                                     <div className="d-flex align-items-center">
                                         <i className="fas fa-book-open fs-2 me-3"></i>
                                         <div>
-                                            <h1 className="m-0 fs-3 fw-bold text-white">My Courses</h1>
+                                            <h1 className="m-0 fs-3 fw-bold text-white">All Users</h1>
                                             <p className="m-0 text-white-50">
-                                                {instructorCourses.length} {instructorCourses.length === 1 ? 'course' : 'courses'} total
+                                                {adminAllUsers.length} {adminAllUsers.length === 1 ? 'user' : 'users'} total
                                             </p>
                                         </div>
                                     </div>
-                                    <a href="/instructor/courses/create" className="btn btn-light btn-sm">
-                                        <i id="create-icon" className="fas fa-plus me-1"></i> Create New Course
-                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {(instructorCourses.length === 0 || error) && <DebugPanel />}
+                {(adminAllUsers.length === 0 || error) && <DebugPanel />}
 
-                {instructorCourses.length === 0 && !error ? (
+                {adminAllUsers.length === 0 && !error ? (
                     <div className="card border-0 shadow-sm">
                         <div className="card-body text-center py-5">
                             <i className="fas fa-book-open fs-1 text-muted mb-3"></i>
-                            <h4 className="mb-3">No Courses Found</h4>
-                            <p className="text-muted mb-4">You haven't created any courses yet. Get started by creating your first course.</p>
-                            <a href="/instructor/courses/create" className="btn btn-primary">
-                                <i className="fas fa-plus me-1"></i> Create Course
-                            </a>
+                            <h4 className="mb-3">No Users Found</h4>
+                            <p className="text-muted mb-4">There is no users yet.</p>
                         </div>
                     </div>
                 ) : error ? (
@@ -297,7 +290,7 @@ function InstructorAllCourses() {
                         <div className="d-flex align-items-center">
                             <i className="fas fa-exclamation-circle me-2"></i>
                             <div>
-                                <h5 className="fw-bold mb-1">Error Loading Courses</h5>
+                                <h5 className="fw-bold mb-1">Error Loading Users</h5>
                                 <p className="mb-0">{error}</p>
                             </div>
                         </div>
@@ -309,22 +302,22 @@ function InstructorAllCourses() {
                                 <table className="table table-hover align-middle mb-0">
                                     <thead className="bg-light">
                                         <tr>
-                                            <th scope="col" className="ps-4" style={{ width: '120px' }}>Thumbnail</th>
-                                            <th scope="col">Title</th>
-                                            <th scope="col" className="text-center">Level</th>
-                                            <th scope="col" className="text-center">Status</th>
-                                            <th scope="col" className="text-center" style={{ width: '120px' }}>Created</th>
-                                            <th scope="col" className="text-end pe-4" style={{ width: '180px' }}>Actions</th>
+                                            <th scope="col" className="ps-4" style={{ width: '120px' }}>User Image</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col" className="text-center">Email</th>
+                                            <th scope="col" className="text-center">Phone</th>
+                                            <th scope="col" className="text-center" style={{ width: '120px' }}>Registered At</th>
+                                            <th scope="col" className="text-center" style={{ width: '180px' }}>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {instructorCourses.map((course) => (
-                                            <tr key={course.id} className="hover-shadow">
+                                        {adminAllUsers.map((user) => (
+                                            <tr key={user.id} className="hover-shadow">
                                                 <td className="ps-4">
-                                                    {course.thumbnail ? (
+                                                    {user.profile_image ? (
                                                         <img
-                                                            src={course.thumbnail}
-                                                            alt={course.title}
+                                                            src={user.profile_image}
+                                                            alt={user.title}
                                                             className="img-fluid rounded shadow-sm"
                                                             style={{
                                                                 height: '60px',
@@ -340,30 +333,21 @@ function InstructorAllCourses() {
                                                     )}
                                                 </td>
                                                 <td>
-                                                    <h6 className="mb-1 fw-semibold">{course.title}</h6>
-                                                    <p className="text-muted small mb-0">
-                                                        {course.description ?
-                                                            (course.description.length > 60 ?
-                                                                course.description.substring(0, 60) + '...' :
-                                                                course.description
-                                                            ) : 'No description'}
-                                                    </p>
+                                                    <h6 className="mb-1 fw-semibold">{user.name}</h6>
                                                 </td>
                                                 <td className="text-center">
-                                                    <span className={`badge rounded-pill ${getLevelBadgeClass(course.level)}`}>
-                                                        {course.level || 'Beginner'}
+                                                    <span>
+                                                        {user.email || 'Beginner'}
                                                     </span>
                                                 </td>
                                                 <td className="text-center">
-                                                    <span className={`badge rounded-pill ${course.is_published ?
-                                                        'bg-success-subtle text-success' :
-                                                        'bg-danger-subtle text-danger'}`}>
-                                                        {course.is_published ? 'Published' : 'Draft'}
+                                                    <span>
+                                                        {user.phone}
                                                     </span>
                                                 </td>
                                                 <td className="text-center" style={{ whiteSpace: 'nowrap' }}>
-                                                    {course.created_at ?
-                                                        new Date(course.created_at).toLocaleDateString('en-GB', {
+                                                    {user.created_at ?
+                                                        new Date(user.created_at).toLocaleDateString('en-GB', {
                                                             day: '2-digit',
                                                             month: '2-digit',
                                                             year: 'numeric'
@@ -372,19 +356,17 @@ function InstructorAllCourses() {
                                                 </td>
                                                 <td className="text-end pe-4">
                                                     <div className="d-flex justify-content-end gap-2">
-                                                        {course.is_published && (
-                                                            <a
-                                                                href={`/instructor/courses/view/${course.slug || course.id}`}
-                                                                className="btn btn-sm btn-success"
-                                                                title="View course"
-                                                                // target="_blank"
-                                                                rel="noopener noreferrer"
-                                                            >
-                                                                <i className="fas fa-eye"></i>
-                                                            </a>
-                                                        )}
                                                         <a
-                                                            href={`/instructor/courses/edit/${course.id}`}
+                                                            href={`/instructor/courses/view/${user.slug || user.id}`}
+                                                            className="btn btn-sm btn-success"
+                                                            title="View course"
+                                                            // target="_blank"
+                                                            rel="noopener noreferrer"
+                                                        >
+                                                            <i className="fas fa-eye"></i>
+                                                        </a>
+                                                        <a
+                                                            href={`/instructor/courses/edit/${user.id}`}
                                                             className="btn btn-sm btn-warning"
                                                             title="Edit course"
                                                         >
@@ -392,7 +374,7 @@ function InstructorAllCourses() {
                                                         </a>
                                                         <button
                                                             className="btn btn-sm btn-danger"
-                                                            onClick={() => handleDeleteCourse(course)}
+                                                            onClick={() => handleDeleteUser(user)}
                                                             title="Delete course"
                                                         >
                                                             <i className="fas fa-trash"></i>
@@ -407,7 +389,7 @@ function InstructorAllCourses() {
                         </div>
                     </div>
                 )}
-                
+
                 <DeleteConfirmationModal />
             </div>
         </>
@@ -429,4 +411,4 @@ function InstructorAllCourses() {
     }
 }
 
-export default InstructorAllCourses;
+export default AdminViewAllUsers;
