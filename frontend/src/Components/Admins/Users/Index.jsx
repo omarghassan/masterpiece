@@ -357,25 +357,25 @@ function AdminViewAllUsers() {
                                                 <td className="text-end pe-4">
                                                     <div className="d-flex justify-content-end gap-2">
                                                         <a
-                                                            href={`/instructor/courses/view/${user.slug || user.id}`}
+                                                            href={`/admin/users/view/${user.slug || user.id}`}
                                                             className="btn btn-sm btn-success"
-                                                            title="View course"
+                                                            title="View user"
                                                             // target="_blank"
                                                             rel="noopener noreferrer"
                                                         >
                                                             <i className="fas fa-eye"></i>
                                                         </a>
                                                         <a
-                                                            href={`/instructor/courses/edit/${user.id}`}
+                                                            href={`/admin/users/edit/${user.id}`}
                                                             className="btn btn-sm btn-warning"
-                                                            title="Edit course"
+                                                            title="Edit user"
                                                         >
                                                             <i className="fas fa-edit"></i>
                                                         </a>
                                                         <button
                                                             className="btn btn-sm btn-danger"
                                                             onClick={() => handleDeleteUser(user)}
-                                                            title="Delete course"
+                                                            title="Delete user"
                                                         >
                                                             <i className="fas fa-trash"></i>
                                                         </button>
@@ -394,21 +394,6 @@ function AdminViewAllUsers() {
             </div>
         </>
     );
-
-    function getLevelBadgeClass(level) {
-        const levelStr = (level || 'Beginner').toLowerCase();
-
-        switch (levelStr) {
-            case 'beginner':
-                return 'bg-success-subtle text-success';
-            case 'intermediate':
-                return 'bg-warning-subtle text-warning';
-            case 'advanced':
-                return 'bg-danger-subtle text-danger';
-            default:
-                return 'bg-primary-subtle text-primary';
-        }
-    }
 }
 
 export default AdminViewAllUsers;

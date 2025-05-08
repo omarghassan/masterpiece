@@ -17,12 +17,16 @@ import AdminLogin from "./Components/Admins/Auth/Login";
 import Adminhome from "./Components/Admins/home";
 import AdminProfile from "./Components/Admins/AdminProfile";
 import AdminViewAllUsers from "./Components/Admins/Users/Index";
+import LandingPage from "./Components/MainSite/Home";
 
 function App() {
   return (
     <Router>
       <div>
         <Routes>
+
+          <Route path="/" element={<LandingPage />}></Route>
+
           {/* <Route path="/" element={<></>}></Route> */}
           <Route path="/instructor/login" element={<InstructorLogin />}></Route>
           <Route path="/instructor/profile" element={<InstructorProfile />}></Route>

@@ -1,44 +1,48 @@
 import { useState, useEffect } from 'react';
 import { Home } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import './NotFound.css';
 
 export default function NotFound() {
   const [counter, setCounter] = useState(10);
-  
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (counter > 0) {
       const timer = setTimeout(() => setCounter(counter - 1), 1000);
       return () => clearTimeout(timer);
+    } else {
+      navigate('/');
     }
-  }, [counter]);
+  }, [counter, navigate]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full text-center">
-        <h1 className="text-9xl font-bold text-blue-500">404</h1>
-        
-        <div className="w-full flex items-center justify-center my-6">
-          <div className="h-px bg-gray-300 w-full"></div>
-          <div className="px-4 text-gray-500 font-medium">Page Not Found</div>
-          <div className="h-px bg-gray-300 w-full"></div>
+    <div className="not-found-container">
+      <div className="not-found-card">
+        <h1 className="error-code">404</h1>
+
+        <div className="divider-wrapper">
+          <div className="divider-line"></div>
+          <div className="divider-text">Page Not Found</div>
+          <div className="divider-line"></div>
         </div>
-        
-        <p className="text-gray-600 mb-8">
-          Oops! The page you are looking for might have been removed, had its name changed, 
-          or is temporarily unavailable.
+
+        <p className="error-message">
+          Oops! The page you are looking for might have been removed, or is temporarily unavailable.
         </p>
-        
-        <a 
-          href="/" 
-          className="flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition-colors duration-300 font-medium"
+
+        <a
+          href="/"
+          className="back-home-button"
+          onClick={(e) => {
+            e.preventDefault();
+            navigate('/');
+          }}
         >
-          <Home className="mr-2 h-5 w-5" />
+          <Home className="icon" />
           Back to Homepage
-          {counter > 0 && <span className="ml-2 text-sm opacity-75">({counter}s)</span>}
+          {counter > 0 && <span className="countdown">({counter}s)</span>}
         </a>
-      </div>
-      
-      <div className="mt-8 text-center text-gray-500">
-        <p>Need help? <a href="/contact" className="text-blue-500 hover:underline">Contact our support team</a></p>
       </div>
     </div>
   );
