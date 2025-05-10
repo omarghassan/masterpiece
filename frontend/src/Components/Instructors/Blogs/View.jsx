@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { BookOpen, Edit, Clock, User, ArrowLeft, Trash2 } from 'lucide-react';
-import InstructorSidebar from '../../Layouts/Instructors/Sidebar';
+import InstructorSidebar from '../../Layouts/Instructors/InstructorSidebar';
 import axios from 'axios';
 import BlogContent from '../../EditorJS/BlogContent'; // Import BlogContent component
 

@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+
+import NotFound from "./Components/404PageNotFound/NotFound";
+
+// Instructor Components Imports
 import InstructorLogin from "./Components/Instructors/Auth/Login";
 import InstructorProfile from "./Components/Instructors/Profile";
-import Footer from "./Components/Layouts/Instructors/Footer";
-import InstructorSidebar from "./Components/Layouts/Instructors/Sidebar";
-import Navbar from "./Components/Layouts/Instructors/Navbar";
 import InstructorAllCourses from "./Components/Instructors/Courses/Index";
-import NotFound from "./Components/404PageNotFound/NotFound";
 import InstructorCreateCourse from "./Components/Instructors/Courses/Create";
 import InstructorEditCourse from "./Components/Instructors/Courses/Edit";
 import InstructorViewCourse from "./Components/Instructors/Courses/View";
@@ -13,11 +13,17 @@ import InstructorAllBlogs from "./Components/Instructors/Blogs/Index";
 import InstructorViewBlog from "./Components/Instructors/Blogs/View";
 import InstructorCreateBlog from "./Components/Instructors/Blogs/Create";
 import InstructorEditBlog from "./Components/Instructors/Blogs/Edit";
+
+// Admin Components Imports
 import AdminLogin from "./Components/Admins/Auth/Login";
-import Adminhome from "./Components/Admins/home";
+import AdminHome from "./Components/Admins/AdminHomePage";
 import AdminProfile from "./Components/Admins/AdminProfile";
 import AdminViewAllUsers from "./Components/Admins/Users/Index";
-import LandingPage from "./Components/MainSite/Home";
+import AdminUserEdit from "./Components/Admins/Users/Edit";
+
+// Main site Imports
+import LandingPage from "./Components/MainSite/Landing";
+import AdminUserDetails from "./Components/Admins/Users/View";
 
 function App() {
   return (
@@ -43,15 +49,14 @@ function App() {
 
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLogin />}></Route>
+          <Route path="/admin/home" element={<AdminHome />}></Route>
           <Route path="/admin/profile" element={<AdminProfile />}></Route>
           <Route path="/admin/users" element={<AdminViewAllUsers />}></Route>
-          <Route path="/admin/home" element={<Adminhome />}></Route>
+          <Route path="/admin/users/view/:id" element={<AdminUserDetails />}></Route>
+          <Route path="/admin/users/edit/:id" element={<AdminUserEdit />}></Route>
 
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
-        {/* <Navbar /> */}
-        {/* <InstructorSidebar /> */}
-        {/* <Footer/> */}
       </div>
     </Router>
   );

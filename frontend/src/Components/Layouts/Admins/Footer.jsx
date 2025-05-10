@@ -1,4 +1,4 @@
-function Footer() {
+function AdminFooter() {
 
     let yearDate = new Date()
     return (
@@ -16,4 +16,4 @@ function Footer() {
     );
 }
 
-export default Footer;
+export default AdminFooter;

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import AdminSidebar from '../Layouts/Admins/Sidebar';
+import AdminSidebar from '../Layouts/Admins/AdminSidebar';
 
 function AdminProfile() {
     const [adminData, setAdminData] = useState(null);
@@ -60,7 +60,7 @@ function AdminProfile() {
             <AdminSidebar />
             <div className="d-flex">
 
-                <div className="container-fluid py-4" style={{ marginLeft: '260px' }}>
+                <div className="container-fluid py-4" style={{ marginLeft: '260px', maxWidth: 'calc(100% - 280px)' }}>
                     {/* Header Banner */}
                     <div className="row mb-4">
                         <div className="col-12">

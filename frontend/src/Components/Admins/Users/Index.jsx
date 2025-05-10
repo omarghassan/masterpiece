@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import AdminSidebar from '../../Layouts/Admins/Sidebar';
+import AdminSidebar from '../../Layouts/Admins/AdminSidebar';
 
 
 function AdminViewAllUsers() {
@@ -215,41 +215,41 @@ function AdminViewAllUsers() {
         );
     }
 
-    const DebugPanel = () => (
-        <div className="card border-0 shadow-sm mb-4">
-            <div className="card-header bg-light d-flex justify-content-between align-items-center">
-                <h5 className="mb-0">Debug Information</h5>
-                <button
-                    className="btn btn-sm btn-secondary"
-                    onClick={() => window.location.reload()}
-                >
-                    <i className="fas fa-sync-alt me-1"></i> Refresh
-                </button>
-            </div>
-            <div className="card-body">
-                {error && (
-                    <div className="alert alert-danger mb-4">
-                        <h6 className="fw-bold mb-2">Error Details:</h6>
-                        <p className="mb-0">{error}</p>
-                    </div>
-                )}
+    // const DebugPanel = () => (
+    //     <div className="card border-0 shadow-sm mb-4">
+    //         <div className="card-header bg-light d-flex justify-content-between align-items-center">
+    //             <h5 className="mb-0">Debug Information</h5>
+    //             <button
+    //                 className="btn btn-sm btn-secondary"
+    //                 onClick={() => window.location.reload()}
+    //             >
+    //                 <i className="fas fa-sync-alt me-1"></i> Refresh
+    //             </button>
+    //         </div>
+    //         <div className="card-body">
+    //             {error && (
+    //                 <div className="alert alert-danger mb-4">
+    //                     <h6 className="fw-bold mb-2">Error Details:</h6>
+    //                     <p className="mb-0">{error}</p>
+    //                 </div>
+    //             )}
 
-                <div className="mb-3">
-                    <h6 className="fw-bold mb-2">Raw API Response:</h6>
-                    <pre className="bg-light p-3 rounded" style={{ maxHeight: '200px', overflow: 'auto' }}>
-                        {JSON.stringify(apiResponse, null, 2)}
-                    </pre>
-                </div>
+    //             <div className="mb-3">
+    //                 <h6 className="fw-bold mb-2">Raw API Response:</h6>
+    //                 <pre className="bg-light p-3 rounded" style={{ maxHeight: '200px', overflow: 'auto' }}>
+    //                     {JSON.stringify(apiResponse, null, 2)}
+    //                 </pre>
+    //             </div>
 
-                <div className="mb-3">
-                    <h6 className="fw-bold mb-2">Parsed Users:</h6>
-                    <pre className="bg-light p-3 rounded" style={{ maxHeight: '200px', overflow: 'auto' }}>
-                        {JSON.stringify(adminAllUsers, null, 2)}
-                    </pre>
-                </div>
-            </div>
-        </div>
-    );
+    //             <div className="mb-3">
+    //                 <h6 className="fw-bold mb-2">Parsed Users:</h6>
+    //                 <pre className="bg-light p-3 rounded" style={{ maxHeight: '200px', overflow: 'auto' }}>
+    //                     {JSON.stringify(adminAllUsers, null, 2)}
+    //                 </pre>
+    //             </div>
+    //         </div>
+    //     </div>
+    // );
 
     return (
         <>
@@ -275,7 +275,7 @@ function AdminViewAllUsers() {
                     </div>
                 </div>
 
-                {(adminAllUsers.length === 0 || error) && <DebugPanel />}
+                {/* {(adminAllUsers.length === 0 || error) && <DebugPanel />} */}
 
                 {adminAllUsers.length === 0 && !error ? (
                     <div className="card border-0 shadow-sm">
@@ -337,12 +337,12 @@ function AdminViewAllUsers() {
                                                 </td>
                                                 <td className="text-center">
                                                     <span>
-                                                        {user.email || 'Beginner'}
+                                                        {user.email}
                                                     </span>
                                                 </td>
                                                 <td className="text-center">
                                                     <span>
-                                                        {user.phone}
+                                                        {user.phone || 'N/A'}
                                                     </span>
                                                 </td>
                                                 <td className="text-center" style={{ whiteSpace: 'nowrap' }}>

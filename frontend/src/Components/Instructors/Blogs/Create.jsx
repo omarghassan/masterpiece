@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BookOpen, Upload, X, Save, ArrowLeft } from 'lucide-react';
-import InstructorSidebar from '../../Layouts/Instructors/Sidebar';
+import InstructorSidebar from '../../Layouts/Instructors/InstructorSidebar';
 import EditorComponent from '../../EditorJS/EditorJS';
 import axios from 'axios';
 

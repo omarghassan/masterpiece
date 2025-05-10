@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Upload, BookOpen, ChevronDown, X } from 'lucide-react';
-import InstructorSidebar from '../../Layouts/Instructors/Sidebar';
+import InstructorSidebar from '../../Layouts/Instructors/InstructorSidebar';
 import axios from 'axios';
 
 export default function CreateCourse() {

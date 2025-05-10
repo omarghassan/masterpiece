@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import InstructorSidebar from '../Layouts/Instructors/Sidebar';
+import InstructorSidebar from '../Layouts/Instructors/InstructorSidebar';
 
 function InstructorProfile() {
     const [instructorData, setInstructorData] = useState(null);
@@ -60,7 +60,7 @@ function InstructorProfile() {
             <InstructorSidebar />
             <div className="d-flex">
 
-                <div className="container-fluid py-4" style={{ marginLeft: '260px' }}>
+                <div className="container-fluid py-4" style={{ marginLeft: '260px', maxWidth: 'calc(100% - 280px)' }}>
                     {/* Header Banner */}
                     <div className="row mb-4">
                         <div className="col-12">
@@ -109,13 +109,13 @@ function InstructorProfile() {
                                     </div>
 
                                     <div className="d-flex justify-content-center gap-2 mb-3">
-                                        <a href="#" className="btn btn-outline-primary rounded-circle p-2">
+                                        <a href="#" className="btn btn-primary rounded-circle p-2">
                                             <i className="fab fa-linkedin-in"></i>
                                         </a>
-                                        <a href="#" className="btn btn-outline-info rounded-circle p-2">
+                                        <a href="#" className="btn btn-info rounded-circle p-2">
                                             <i className="fab fa-twitter"></i>
                                         </a>
-                                        <a href="#" className="btn btn-outline-dark rounded-circle p-2">
+                                        <a href="#" className="btn btn-dark rounded-circle p-2">
                                             <i className="fab fa-github"></i>
                                         </a>
                                     </div>

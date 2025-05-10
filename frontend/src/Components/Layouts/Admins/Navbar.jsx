@@ -1,7 +1,7 @@
-function Navbar() {
+function AdminNavbar() {
     return (
         <div></div>
     );
 }
 
-export default Navbar;
+export default AdminNavbar;

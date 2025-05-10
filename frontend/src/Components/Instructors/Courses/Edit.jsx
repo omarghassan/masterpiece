@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Upload, BookOpen, X, Save, ArrowLeft } from 'lucide-react';
-import InstructorSidebar from '../../Layouts/Instructors/Sidebar';
+import InstructorSidebar from '../../Layouts/Instructors/InstructorSidebar';
 import axios from 'axios';
 
 function InstructorEditCourse() {
