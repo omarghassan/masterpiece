@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Instructor;
-use App\Models\Course;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -83,6 +81,63 @@ class UserManagementController extends Controller
     }
 
     /**
+     * Update user details.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateUser(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'nullable|string|max:255',
+            'email' => [
+                'nullable',
+                'email',
+                'max:255',
+                Rule::unique('users')->ignore($id)
+            ],
+            'phone' => 'nullable|string|max:20',
+            'bio' => 'nullable|string',
+            'is_active' => 'nullable|boolean',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $user = User::findOrFail($id);
+        
+        // Update only the fields that are present in the request
+        if ($request->has('name')) {
+            $user->name = $request->name;
+        }
+        
+        if ($request->has('email')) {
+            $user->email = $request->email;
+        }
+        
+        if ($request->has('phone')) {
+            $user->phone = $request->phone;
+        }
+        
+        if ($request->has('bio')) {
+            $user->bio = $request->bio;
+        }
+        
+        if ($request->has('is_active')) {
+            $user->is_active = $request->is_active;
+        }
+        
+        $user->save();
+
+        return response()->json([
+            'message' => 'User information has been updated successfully',
+            'user' => $user
+        ]);
+    }
+
+    /**
      * Toggle user account status.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -132,89 +187,6 @@ class UserManagementController extends Controller
 
         return response()->json([
             'message' => 'User and all associated data have been deleted successfully'
-        ]);
-    }
-
-    /**
-     * Display a listing of all instructors with pagination and filters.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function listInstructors(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'search' => 'nullable|string|max:255',
-            'verification' => 'nullable|string|in:verified,unverified,all',
-            'sort_by' => 'nullable|string|in:name,email,created_at',
-            'sort_dir' => 'nullable|string|in:asc,desc',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $query = Instructor::query();
-
-        // Apply search filter
-        if ($request->has('search') && !empty($request->search)) {
-            $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('name', 'LIKE', "%{$search}%")
-                  ->orWhere('email', 'LIKE', "%{$search}%")
-                  ->orWhere('expertise', 'LIKE', "%{$search}%");
-            });
-        }
-
-        // Apply verification filter
-        if ($request->has('verification') && $request->verification !== 'all') {
-            $isVerified = $request->verification === 'verified';
-            $query->where('is_verified', $isVerified);
-        }
-
-        // Apply sorting
-        $sortBy = $request->sort_by ?? 'created_at';
-        $sortDir = $request->sort_dir ?? 'desc';
-        $query->orderBy($sortBy, $sortDir);
-
-        // Get paginated results with course count
-        $instructors = $query->withCount('courses')->paginate(15);
-
-        return response()->json($instructors);
-    }
-
-    /**
-     * Display detailed information about a specific instructor including courses and blogs.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function getInstructorDetails($id)
-    {
-        $instructor = Instructor::with(['courses', 'blogs'])
-                               ->withCount(['courses', 'blogs'])
-                               ->findOrFail($id);
-
-        return response()->json($instructor);
-    }
-
-    /**
-     * Toggle instructor verification status.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function toggleInstructorVerification($id)
-    {
-        $instructor = Instructor::findOrFail($id);
-        $instructor->is_verified = !$instructor->is_verified;
-        $instructor->save();
-
-        $status = $instructor->is_verified ? 'verified' : 'unverified';
-
-        return response()->json([
-            'message' => "Instructor has been {$status} successfully",
-            'instructor' => $instructor
         ]);
     }
 } 

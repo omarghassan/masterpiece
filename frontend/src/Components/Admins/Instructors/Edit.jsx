@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AdminSidebar from '../../Layouts/Admins/AdminSidebar';
 
-function AdminUserEdit() {
+function AdminInstructorEdit() {
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -18,34 +18,34 @@ function AdminUserEdit() {
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState(null);
 
-    // Load user data when component mounts
+    // Load instructor data when component mounts
     useEffect(() => {
-        const fetchUserData = async () => {
+        const fetchInstructorData = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get(`http://127.0.0.1:8000/api/admins/users-management/users/${id}`, {
+                const response = await axios.get(`http://127.0.0.1:8000/api/admins/users-management/instructors/${id}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
                     }
                 });
 
-                const userData = response.data;
+                const instructorData = response.data;
                 setFormData({
-                    name: userData.name || '',
-                    email: userData.email || '',
-                    phone: userData.phone || '',
-                    bio: userData.bio || ''
+                    name: instructorData.name || '',
+                    email: instructorData.email || '',
+                    phone: instructorData.phone || '',
+                    bio: instructorData.bio || ''
                 });
             } catch (err) {
-                console.error('Error fetching user:', err);
-                setError('Failed to load user data.');
+                console.error('Error fetching instructor:', err);
+                setError('Failed to load instructor data.');
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchUserData();
+        fetchInstructorData();
     }, [id]);
 
     // Handle input change
@@ -65,7 +65,7 @@ function AdminUserEdit() {
 
         try {
             const token = localStorage.getItem('token');
-            await axios.put(`http://127.0.0.1:8000/api/admins/users-management/users/${id}`, formData, {
+            await axios.put(`http://127.0.0.1:8000/api/admins/users-management/instructors/${id}`, formData, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
@@ -73,10 +73,10 @@ function AdminUserEdit() {
             });
 
             // Redirect back to view or list after success
-            navigate(`/admin/users/view/${id}`);
+            navigate(`/admin/instructors/view/${id}`);
         } catch (err) {
             console.error('Update error:', err);
-            let message = 'Failed to update user.';
+            let message = 'Failed to update instructor.';
             if (err.response && err.response.data && err.response.data.message) {
                 message = err.response.data.message;
             }
@@ -104,8 +104,8 @@ function AdminUserEdit() {
                     <div className="col">
                         <div className="card border-0 shadow-sm overflow-hidden">
                             <div className="bg-dark bg-gradient p-4">
-                                <h1 className="m-0 fs-3 fw-bold text-white">Edit User</h1>
-                                <p className="m-0 text-white-50">Update user information below</p>
+                                <h1 className="m-0 fs-3 fw-bold text-white">Edit Instructor</h1>
+                                <p className="m-0 text-white-50">Update instructor information below</p>
                             </div>
                         </div>
                     </div>
@@ -172,7 +172,7 @@ function AdminUserEdit() {
                             </div>
 
                             <div className="d-flex justify-content-between">
-                                <a href="/admin/users" className="btn btn-outline-secondary">
+                                <a href="/admin/instructors" className="btn btn-outline-secondary">
                                     <i className="fas fa-arrow-left me-1"></i> Cancel
                                 </a>
                                 <button
@@ -200,4 +200,4 @@ function AdminUserEdit() {
     );
 }
 
-export default AdminUserEdit;
+export default AdminInstructorEdit;

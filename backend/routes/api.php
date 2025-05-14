@@ -59,12 +59,14 @@ Route::prefix('admins')->middleware(['auth:sanctum', 'ability:admin'])->group(fu
         // User routes
         Route::get('/users', [UserManagementController::class, 'listUsers']);
         Route::get('/users/{id}', [UserManagementController::class, 'getUserDetails']);
+        Route::put('/users/{id}', [UserManagementController::class, 'updateUser']);
         Route::put('/users/{id}/toggle-status', [UserManagementController::class, 'toggleUserStatus']);
         Route::delete('/users/{id}', [UserManagementController::class, 'deleteUser']);
         
         // Instructor routes
         Route::get('/instructors', [InstructorManagementController::class, 'listInstructors']);
         Route::get('/instructors/{id}', [InstructorManagementController::class, 'getInstructorDetails']);
+        Route::put('/instructors/{id}', [InstructorManagementController::class, 'updateInstructor']);
         Route::put('/instructors/{id}/toggle-verification', [InstructorManagementController::class, 'toggleInstructorVerification']);
         Route::delete('/instructors/{id}', [InstructorManagementController::class, 'deleteInstructor']);
     });

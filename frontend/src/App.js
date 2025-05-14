@@ -2,6 +2,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
 import NotFound from "./Components/404PageNotFound/NotFound";
 
+// Main site Imports
+import LandingPage from "./Components/MainSite/Landing";
+
 // Instructor Components Imports
 import InstructorLogin from "./Components/Instructors/Auth/Login";
 import InstructorProfile from "./Components/Instructors/Profile";
@@ -21,9 +24,13 @@ import AdminProfile from "./Components/Admins/AdminProfile";
 import AdminViewAllUsers from "./Components/Admins/Users/Index";
 import AdminUserEdit from "./Components/Admins/Users/Edit";
 
-// Main site Imports
-import LandingPage from "./Components/MainSite/Landing";
 import AdminUserDetails from "./Components/Admins/Users/View";
+import AdminInstructorDetails from "./Components/Admins/Instructors/View";
+import AdminViewAllInstructors from "./Components/Admins/Instructors/Index";
+import AdminInstructorEdit from "./Components/Admins/Instructors/Edit";
+import AdminViewAllSubscriptions from "./Components/Admins/Subscriptions/Index";
+import AdminViewAllBlogs from "./Components/Admins/Blogs/Index";
+import AdminViewAllCourses from "./Components/Admins/Courses/Index";
 
 function App() {
   return (
@@ -33,9 +40,11 @@ function App() {
 
           <Route path="/" element={<LandingPage />}></Route>
 
-          {/* <Route path="/" element={<></>}></Route> */}
+          {/* Instructor Routes */}
           <Route path="/instructor/login" element={<InstructorLogin />}></Route>
           <Route path="/instructor/profile" element={<InstructorProfile />}></Route>
+
+          {/* Instructor Courses Routes */}
           <Route path="/instructor/courses" element={<InstructorAllCourses />}></Route>
           <Route path="/instructor/courses/view/:id" element={<InstructorViewCourse />}></Route>
           <Route path="/instructor/courses/create" element={<InstructorCreateCourse />}></Route>
@@ -54,6 +63,12 @@ function App() {
           <Route path="/admin/users" element={<AdminViewAllUsers />}></Route>
           <Route path="/admin/users/view/:id" element={<AdminUserDetails />}></Route>
           <Route path="/admin/users/edit/:id" element={<AdminUserEdit />}></Route>
+          <Route path="/admin/instructors" element={<AdminViewAllInstructors />}></Route>
+          <Route path="/admin/instructors/view/:id" element={<AdminInstructorDetails />}></Route>
+          <Route path="/admin/instructors/edit/:id" element={<AdminInstructorEdit />}></Route>
+          <Route path="/admin/subscriptions" element={<AdminViewAllSubscriptions />}></Route>
+          <Route path="/admin/blogs" element={<AdminViewAllBlogs />}></Route>
+          <Route path="/admin/courses" element={<AdminViewAllCourses />}></Route>
 
           <Route path="*" element={<NotFound />}></Route>
         </Routes>

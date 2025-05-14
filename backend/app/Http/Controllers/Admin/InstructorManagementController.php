@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Instructor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class InstructorManagementController extends Controller
 {
@@ -70,6 +71,68 @@ class InstructorManagementController extends Controller
                                ->findOrFail($id);
 
         return response()->json($instructor);
+    }
+
+    /**
+     * Update instructor details.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateInstructor(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'nullable|string|max:255',
+            'email' => [
+                'nullable',
+                'email',
+                'max:255',
+                Rule::unique('instructors')->ignore($id)
+            ],
+            'phone' => 'nullable|string|max:20',
+            'expertise' => 'nullable|string|max:255',
+            'instructor_bio' => 'nullable|string',
+            'is_verified' => 'nullable|boolean',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $instructor = Instructor::findOrFail($id);
+        
+        // Update only the fields that are present in the request
+        if ($request->has('name')) {
+            $instructor->name = $request->name;
+        }
+        
+        if ($request->has('email')) {
+            $instructor->email = $request->email;
+        }
+        
+        if ($request->has('phone')) {
+            $instructor->phone = $request->phone;
+        }
+        
+        if ($request->has('expertise')) {
+            $instructor->expertise = $request->expertise;
+        }
+        
+        if ($request->has('instructor_bio')) {
+            $instructor->instructor_bio = $request->instructor_bio;
+        }
+        
+        if ($request->has('is_verified')) {
+            $instructor->is_verified = $request->is_verified;
+        }
+        
+        $instructor->save();
+
+        return response()->json([
+            'message' => 'Instructor information has been updated successfully',
+            'instructor' => $instructor
+        ]);
     }
 
     /**
