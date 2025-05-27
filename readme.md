@@ -29,10 +29,10 @@ A website that's designed to teach people soft skills
 ## Tech Stack
 
 ### Frontend
-- React 19.1.0
+- React v19.1.0
 
 ### Backend
-- PHP Laravel
+- PHP Laravel v12
 - MySQL Database
 - RESTful API Architecture
 
