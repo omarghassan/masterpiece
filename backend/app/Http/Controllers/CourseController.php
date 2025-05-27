@@ -13,7 +13,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $courses = Course::where('is_published', true)->paginate(15);
+        return response()->json($courses);
     }
 
     /**
@@ -35,9 +36,13 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Course $course)
+    public function show($id)
     {
-        //
+        $course = Course::with(['instructor', 'modules.lessons'])
+                        ->withCount(['modules', 'lessons'])
+                        ->findOrFail($id);
+
+        return response()->json($course);
     }
 
     /**

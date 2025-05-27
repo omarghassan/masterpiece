@@ -173,7 +173,7 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'Login successful',
-            'access_token' => $token,
+            'token' => $token,
             'token_type' => 'Bearer',
             'user' => $user,
         ]);

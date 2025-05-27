@@ -1,0 +1,84 @@
+/**
+ * Luxury Color Palette - Variables
+ * 
+ * This file contains the color variables for the website's luxury theme.
+ * Import this file in your CSS files to maintain consistent colors across the site.
+ * 
+ * Usage example:
+ * .your-class {
+ *   color: var(--color-primary);
+ *   background-color: var(--color-light);
+ * }
+ */
+
+ :root {
+    /* Primary Colors */
+    --color-primary: #0F1C2E;        /* Deep Navy Blue */
+    --color-secondary: #E6B54A;      /* Warm Gold */
+    
+    /* Supporting Colors */
+    --color-light: #F7F3E9;          /* Soft Cream */
+    --color-dark: #323642;           /* Charcoal Gray */
+    --color-accent: #5A7D7C;         /* Muted Teal */
+    
+    /* Text Colors */
+    --text-primary: #0F1C2E;         /* For headings and important text */
+    --text-secondary: #323642;       /* For body text */
+    --text-light: #F7F3E9;           /* Text on dark backgrounds */
+    --text-muted: rgba(50, 54, 66, 0.7); /* Muted text */
+    
+    /* UI Element Colors */
+    --border-light: rgba(15, 28, 46, 0.1);
+    --border-accent: #E6B54A;
+    --shadow: rgba(0, 0, 0, 0.08);
+    --hover-shadow: rgba(0, 0, 0, 0.15);
+    
+    /* Gradient Combinations */
+    --gradient-primary: linear-gradient(135deg, #0F1C2E 0%, #323642 100%);
+    --gradient-secondary: linear-gradient(135deg, #323642 0%, #5A7D7C 100%);
+    --gradient-accent: linear-gradient(135deg, #5A7D7C 0%, #0F1C2E 100%);
+    
+    /* Overlay Colors */
+    --overlay-dark: rgba(15, 28, 46, 0.8);
+    --overlay-light: rgba(247, 243, 233, 0.9);
+    
+    /* Status Colors */
+    --color-success: #4A7C59;        /* Elegant green */
+    --color-warning: #D4A95C;        /* Gold-toned warning */
+    --color-error: #A83A3A;          /* Rich burgundy error */
+    --color-info: #4A6B8A;           /* Navy-toned info */
+    
+    /* Background Variations */
+    --bg-primary-light: rgba(15, 28, 46, 0.05);
+    --bg-secondary-light: rgba(230, 181, 74, 0.1);
+  }
+  
+  /* 
+   * Color Utility Classes
+   * Convenient classes for applying colors directly in HTML
+   */
+  
+  /* Background Colors */
+  .bg-primary { background-color: var(--color-primary); }
+  .bg-secondary { background-color: var(--color-secondary); }
+  .bg-light { background-color: var(--color-light); }
+  .bg-dark { background-color: var(--color-dark); }
+  .bg-accent { background-color: var(--color-accent); }
+  
+  /* Gradient Backgrounds */
+  .bg-gradient-primary { background: var(--gradient-primary); }
+  .bg-gradient-secondary { background: var(--gradient-secondary); }
+  .bg-gradient-accent { background: var(--gradient-accent); }
+  
+  /* Text Colors */
+  .text-primary { color: var(--text-primary); }
+  .text-secondary { color: var(--text-secondary); }
+  .text-light { color: var(--text-light); }
+  .text-accent { color: var(--color-secondary); }
+  .text-muted { color: var(--text-muted); }
+  
+  /* Border Colors */
+  .border-primary { border-color: var(--color-primary); }
+  .border-secondary { border-color: var(--color-secondary); }
+  .border-light { border-color: var(--border-light); }
+  .border-accent { border-color: var(--color-accent); }

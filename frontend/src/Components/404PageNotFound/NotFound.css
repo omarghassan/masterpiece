@@ -1,4 +1,6 @@
-/* Base Styles */
+
+@import url('../../../src/Components/MainSite/ColorPalete.css');
+
 * {
     box-sizing: border-box;
 }
@@ -6,8 +8,8 @@
 body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f3f4f6;
-    color: #ef4444;
+    background-color: var(--color-light);
+    color: var(--text-primary);
 }
 
 .not-found-container {
@@ -24,7 +26,7 @@ body {
     background-color: white;
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 25px var(--shadow);
     max-width: 500px;
     width: 100%;
 }
@@ -32,7 +34,7 @@ body {
 .error-code {
     font-size: 8rem;
     font-weight: bold;
-    color: #ef4444;
+    color: var(--color-secondary);
 }
 
 .divider-wrapper {
@@ -44,18 +46,18 @@ body {
 
 .divider-line {
     height: 1px;
-    background-color: #d1d5db;
+    background-color: var(--border-light);
     flex-grow: 1;
 }
 
 .divider-text {
     padding: 0 16px;
     font-weight: 500;
-    color: #ef4444;
+    color: var(--color-primary);
 }
 
 .error-message {
-    color: #ef4444;
+    color: var(--text-secondary);
     margin-bottom: 32px;
     line-height: 1.5;
 }
@@ -64,8 +66,8 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: #ef4444;
-    color: white;
+    background-color: var(--color-primary);
+    color: var(--text-light);
     padding: 12px 24px;
     border-radius: 8px;
     font-weight: 500;
@@ -74,7 +76,7 @@ body {
 }
 
 .back-home-button:hover {
-    background-color: #dc2626;
+    background-color: var(--color-accent);
 }
 
 .back-home-button .icon {
@@ -90,11 +92,11 @@ body {
 }
 
 .link {
-    color: #ef4444;
+    color: var(--color-secondary);
     text-decoration: underline;
     transition: color 0.2s ease;
 }
 
 .link:hover {
-    color: #dc2626;
+    color: var(--color-accent);
 }

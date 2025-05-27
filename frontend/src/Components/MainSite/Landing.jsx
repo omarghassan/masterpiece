@@ -1,39 +1,30 @@
 import './Landing.css'
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, Users, Award, Clock, ArrowRight } from 'lucide-react';
+import { BookOpen, Users, Award, Clock, ArrowRight, Diamond, Target, Zap } from 'lucide-react';
+import Navbar from './Navbar/Navbar';
+import Footer from './Footer/Footer';
 
 
 export default function LandingPage() {
   return (
     <div className="page-container">
-      {/* Navigation */}
-      <nav className="navbar">
-        <div className="container navbar-content">
-          <div className="logo">
-            <BookOpen className="logo-icon" />
-            <span className="logo-text">EduPlatform</span>
-          </div>
-          <div className="nav-links">
-            <Link to="/login" className="nav-link">Sign In</Link>
-            <Link to="/register" className="btn-primary">Get Started</Link>
-          </div>
-        </div>
-      </nav>
+
+      <Navbar />
 
       {/* Hero Section */}
       <section className="hero">
         <div className="container text-center">
           <h1>
-            <span>Learn from the</span>
-            <span className="highlight">best instructors</span>
+            <span>Elevate Your</span>
+            <span className="highlight"> Professional Presence</span>
           </h1>
           <p className="lead">
-            Access high-quality courses taught by industry experts. Upgrade your skills and advance your career today.
+            Master the essential soft skills that transform careers. Curated courses designed by industry leaders for today's competitive professional landscape.
           </p>
           <div className="cta-buttons">
-            <Link to="/courses" className="btn-primary btn-lg">Browse Courses</Link>
-            <Link to="/register" className="btn-secondary btn-lg">Join Free</Link>
+            <Link to="/courses" className="btn-primary btn-lg">Explore Courses</Link>
+            <Link to="/register" className="btn-secondary btn-lg">Begin Your Journey</Link>
           </div>
         </div>
       </section>
@@ -42,24 +33,24 @@ export default function LandingPage() {
       <section className="features">
         <div className="container">
           <div className="section-header">
-            <h2 className="subtitle">Features</h2>
-            <h3>A better way to learn</h3>
+            <h2 className="subtitle">Why Choose Us</h2>
+            <h3>The Art of Professional Excellence</h3>
           </div>
           <div className="feature-grid">
             <div className="feature-card">
-              <div className="feature-icon"><BookOpen /></div>
-              <h4>Diverse Courses</h4>
-              <p>Choose from hundreds of courses across various disciplines and skill levels.</p>
+              <div className="feature-icon"><Diamond /></div>
+              <h4>Premium Content</h4>
+              <p>Carefully crafted curriculum designed to develop the soft skills most valued in today's professional environment.</p>
             </div>
             <div className="feature-card">
               <div className="feature-icon"><Users /></div>
-              <h4>Expert Instructors</h4>
-              <p>Learn from industry professionals with real-world experience.</p>
+              <h4>Expert Mentorship</h4>
+              <p>Learn from accomplished professionals with proven track records across diverse industries.</p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon"><Clock /></div>
-              <h4>Flexible Learning</h4>
-              <p>Study at your own pace with lifetime access to course materials.</p>
+              <div className="feature-icon"><Target /></div>
+              <h4>Personalized Growth</h4>
+              <p>Customized learning paths adapting to your specific career goals and personal development needs.</p>
             </div>
           </div>
         </div>
@@ -69,20 +60,20 @@ export default function LandingPage() {
       <section className="courses">
         <div className="container">
           <div className="section-header">
-            <h2 className="subtitle">Courses</h2>
-            <h3>Popular Courses</h3>
+            <h2 className="subtitle">Signature Programs</h2>
+            <h3>Transformative Learning Experiences</h3>
           </div>
           <div className="course-grid">
             <div className="course-card">
               <div className="course-thumbnail bg-blue">
-                <BookOpen className="course-icon" />
+                <Zap className="course-icon" />
               </div>
               <div className="course-body">
-                <h4>Web Development Bootcamp</h4>
-                <p>Master HTML, CSS, JavaScript and modern frameworks in this comprehensive course.</p>
+                <h4>Executive Communication Mastery</h4>
+                <p>Develop compelling communication skills that command attention and inspire action in any professional setting.</p>
                 <div className="course-footer">
-                  <span className="price">$99.99</span>
-                  <Link to="/course/web-development" className="link-more">View Course <ArrowRight /></Link>
+                  <span className="price">$349</span>
+                  <Link to="/course/executive-communication" className="link-more">View Details <ArrowRight /></Link>
                 </div>
               </div>
             </div>
@@ -91,72 +82,30 @@ export default function LandingPage() {
                 <Award className="course-icon" />
               </div>
               <div className="course-body">
-                <h4>Data Science Fundamentals</h4>
-                <p>Learn Python, Pandas, and data visualization techniques from scratch.</p>
+                <h4>Strategic Leadership & Influence</h4>
+                <p>Master the subtle art of leadership through presence, emotional intelligence, and strategic relationship building.</p>
                 <div className="course-footer">
-                  <span className="price">$129.99</span>
-                  <Link to="/course/data-science" className="link-more">View Course <ArrowRight /></Link>
+                  <span className="price">$429</span>
+                  <Link to="/course/strategic-leadership" className="link-more">View Details <ArrowRight /></Link>
                 </div>
               </div>
             </div>
             <div className="course-card">
               <div className="course-thumbnail bg-purple">
-                <Users className="course-icon" />
+                <Clock className="course-icon" />
               </div>
               <div className="course-body">
-                <h4>Digital Marketing Mastery</h4>
-                <p>Everything you need to know about SEO, social media, and content marketing.</p>
+                <h4>Negotiation & Conflict Resolution</h4>
+                <p>Acquire advanced techniques to navigate complex negotiations and transform conflicts into opportunities.</p>
                 <div className="course-footer">
-                  <span className="price">$79.99</span>
-                  <Link to="/course/digital-marketing" className="link-more">View Course <ArrowRight /></Link>
+                  <span className="price">$389</span>
+                  <Link to="/course/negotiation-mastery" className="link-more">View Details <ArrowRight /></Link>
                 </div>
               </div>
             </div>
           </div>
-          <div className="text-center">
-            <Link to="/courses" className="btn-primary">View All Courses</Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="testimonials">
-        <div className="container">
-          <div className="section-header">
-            <h2 className="subtitle">Testimonials</h2>
-            <h3>What our students say</h3>
-          </div>
-          <div className="testimonial-grid">
-            <div className="testimonial-card">
-              <div className="testimonial-header">
-                <div className="avatar">JD</div>
-                <div className="user-info">
-                  <h4>John Doe</h4>
-                  <p>Web Developer</p>
-                </div>
-              </div>
-              <p>"The web development course completely transformed my career. The instructors are knowledgeable and the curriculum is up-to-date."</p>
-            </div>
-            <div className="testimonial-card">
-              <div className="testimonial-header">
-                <div className="avatar">AS</div>
-                <div className="user-info">
-                  <h4>Alice Smith</h4>
-                  <p>Data Analyst</p>
-                </div>
-              </div>
-              <p>"I landed my dream job after completing the Data Science course. The hands-on projects were especially valuable."</p>
-            </div>
-            <div className="testimonial-card">
-              <div className="testimonial-header">
-                <div className="avatar">RJ</div>
-                <div className="user-info">
-                  <h4>Robert Johnson</h4>
-                  <p>Marketing Specialist</p>
-                </div>
-              </div>
-              <p>"The digital marketing course provided practical skills I could immediately apply to grow my business. Highly recommended!"</p>
-            </div>
+          <div className="text-center" style={{ marginTop: "3rem" }}>
+            <Link to="/courses" className="btn-primary">Browse All Programs</Link>
           </div>
         </div>
       </section>
@@ -165,53 +114,14 @@ export default function LandingPage() {
       <section className="cta">
         <div className="container cta-content">
           <h2>
-            <span>Ready to dive in?</span>
-            <span className="subtext">Start your learning journey today.</span>
+            <span>Invest in Your Professional Future</span>
+            <span className="subtext">The difference between good and exceptional is mastery of soft skills</span>
           </h2>
-          <Link to="/register" className="btn-light">Get started</Link>
+          <Link to="/register" className="btn-light">Start Your Transformation</Link>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="footer">
-        <div className="container footer-content">
-          <div className="footer-grid">
-            <div>
-              <h4>Company</h4>
-              <ul>
-                <li><Link to="/about">About</Link></li>
-                <li><Link to="/blog">Blog</Link></li>
-                <li><Link to="/careers">Careers</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4>Resources</h4>
-              <ul>
-                <li><Link to="/help">Help Center</Link></li>
-                <li><Link to="/guides">Guides</Link></li>
-                <li><Link to="/community">Community</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4>Legal</h4>
-              <ul>
-                <li><Link to="/privacy">Privacy</Link></li>
-                <li><Link to="/terms">Terms</Link></li>
-                <li><Link to="/cookies">Cookie Policy</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4>Connect</h4>
-              <ul>
-                <li><Link to="#">Twitter</Link></li>
-                <li><Link to="#">Facebook</Link></li>
-                <li><Link to="#">LinkedIn</Link></li>
-              </ul>
-            </div>
-          </div>
-          <p>&copy; {new Date().getFullYear()} EduPlatform. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

@@ -13,7 +13,8 @@ class BlogController extends Controller
      */
     public function index()
     {
-        //
+        $blog = Blog::paginate(15);
+        return response()->json($blog);
     }
 
     /**
@@ -35,9 +36,12 @@ class BlogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Blog $blog)
+    public function show($id)
     {
-        //
+        $blog = Blog::with(['instructor'])
+                    ->findOrFail($id);
+
+        return response()->json($blog);
     }
 
     /**

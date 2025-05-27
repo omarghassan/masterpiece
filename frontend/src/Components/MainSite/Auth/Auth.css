@@ -1,0 +1,122 @@
+
+@import url('../ColorPalete.css');
+
+.userAuth-page {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 20px;
+  background-color: var(--color-light);
+}
+
+.userAuth-form-container {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 8px var(--shadow);
+  border: 1px solid var(--border-light);
+}
+
+.userAuth-form-container h2 {
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.user-form-group {
+  margin-bottom: 15px;
+}
+
+.user-form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.user-form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.user-form-group input:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 2px rgba(230, 181, 74, 0.1);
+}
+
+.submit-btn {
+  background-color: var(--color-primary);
+  color: var(--text-light);
+  border: none;
+  padding: 12px 15px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: var(--color-accent);
+}
+
+.submit-btn:disabled {
+  background-color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.userError-message {
+  background-color: rgba(168, 58, 58, 0.1);
+  color: var(--color-error);
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  text-align: center;
+  border: 1px solid rgba(168, 58, 58, 0.2);
+}
+
+.auth-redirect {
+  margin-top: 20px;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.auth-redirect a {
+  color: var(--color-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.auth-redirect a:hover {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.userSuccess-message {
+  background-color: rgba(74, 124, 89, 0.1);
+  color: var(--color-success);
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  border: 1px solid rgba(74, 124, 89, 0.2);
+  font-size: 14px;
+}
+
+.password-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 5px;
+}

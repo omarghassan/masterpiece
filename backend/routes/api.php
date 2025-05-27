@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AnalyticsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -13,6 +14,9 @@ use App\Http\Controllers\Instructor\InstructorController;
 use App\Http\Controllers\Instructor\CourseController;
 use App\Http\Controllers\Instructor\BlogController;
 use App\Http\Controllers\Admin\InstructorManagementController;
+use App\Http\Controllers\CourseController as MainCourseController;
+use App\Http\Controllers\BlogController as MainBlogController;
+use App\Http\Controllers\Instructor\InstructorAnalytics;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +36,12 @@ Route::post('users/register', [UserController::class, 'store']);
 Route::post('admins/login', [AdminController::class, 'login']);
 Route::post('instructors/login', [InstructorController::class, 'login']);
 Route::post('instructors/register', [InstructorController::class, 'store']);
+
+Route::get('/courses', [MainCourseController::class, 'index']);
+Route::get('/courses/{id}', [MainCourseController::class, 'show']);
+
+Route::get('/blogs', [MainBlogController::class, 'index']);
+Route::get('/blogs/{id}', [MainBlogController::class, 'show']);
 
 // User routes (protected)
 Route::prefix('users')->middleware('auth:sanctum')->group(function () {
@@ -53,6 +63,8 @@ Route::prefix('admins')->middleware(['auth:sanctum', 'ability:admin'])->group(fu
     
     // Admin resource routes
     Route::apiResource('admins', AdminController::class);
+    
+    Route::get('/analytics', [AnalyticsController::class, 'getDashboardStats']);
     
     // User Management routes
     Route::prefix('users-management')->group(function () {
@@ -102,6 +114,8 @@ Route::prefix('instructors')->middleware(['auth:sanctum', 'ability:instructor'])
     Route::put('/profile', [InstructorController::class, 'updateProfile']);
     Route::post('/logout', [InstructorController::class, 'logout']);
     
+    Route::get('/analytics/{id}', [InstructorAnalytics::class, 'getDashboardStats']);
+
     // Instructor resource routes
     Route::apiResource('instructors', InstructorController::class);
     

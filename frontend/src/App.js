@@ -4,6 +4,12 @@ import NotFound from "./Components/404PageNotFound/NotFound";
 
 // Main site Imports
 import LandingPage from "./Components/MainSite/Landing";
+import UserLogin from "./Components/MainSite/Auth/Login";
+import UserRegister from "./Components/MainSite/Auth/Register";
+import AllCourses from "./Components/MainSite/Courses/AllCourses";
+import CourseDetails from "./Components/MainSite/Courses/CourseDetails";
+import AllBlogs from "./Components/MainSite/Blogs/AllBlogs";
+import BlogDetails from "./Components/MainSite/Blogs/BlogDetails";
 
 // Instructor Components Imports
 import InstructorLogin from "./Components/Instructors/Auth/Login";
@@ -16,6 +22,7 @@ import InstructorAllBlogs from "./Components/Instructors/Blogs/Index";
 import InstructorViewBlog from "./Components/Instructors/Blogs/View";
 import InstructorCreateBlog from "./Components/Instructors/Blogs/Create";
 import InstructorEditBlog from "./Components/Instructors/Blogs/Edit";
+import InstructorHomePage from "./Components/Instructors/InstructorHomePage";
 
 // Admin Components Imports
 import AdminLogin from "./Components/Admins/Auth/Login";
@@ -32,17 +39,27 @@ import AdminViewAllSubscriptions from "./Components/Admins/Subscriptions/Index";
 import AdminViewAllBlogs from "./Components/Admins/Blogs/Index";
 import AdminViewAllCourses from "./Components/Admins/Courses/Index";
 
+
+
 function App() {
   return (
     <Router>
       <div>
         <Routes>
 
+          {/* Main Site Routes */}
           <Route path="/" element={<LandingPage />}></Route>
+          <Route path="/login" element={<UserLogin />}></Route>
+          <Route path="/register" element={<UserRegister />}></Route>
+          <Route path="/courses" element={<AllCourses />}></Route>
+          <Route path="/courses/:id" element={<CourseDetails />}></Route>
+          <Route path="/blogs/" element={<AllBlogs />}></Route>
+          <Route path="/blogs/:id" element={<BlogDetails />}></Route>
 
           {/* Instructor Routes */}
           <Route path="/instructor/login" element={<InstructorLogin />}></Route>
           <Route path="/instructor/profile" element={<InstructorProfile />}></Route>
+          <Route path="/instructor/home" element={<InstructorHomePage />}></Route>
 
           {/* Instructor Courses Routes */}
           <Route path="/instructor/courses" element={<InstructorAllCourses />}></Route>

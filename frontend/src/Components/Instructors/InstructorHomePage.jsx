@@ -1,74 +1,75 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import AdminSidebar from "../Layouts/Admins/AdminSidebar";
+import InstructorSidebar from "../Layouts/Instructors/InstructorSidebar";
+import { Link } from 'react-router-dom';
 
-function AdminHome() {
+function InstructorHomePage() {
     const [analytics, setAnalytics] = useState({
-        users: 0,
-        instructors: 0,
-        blogs: 0,
-        courses: 0
+        courses: 0,
+        blogs: 0
     });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    // You might want to get this from props, context, or localStorage
+    const instructorId = 2; // Replace with dynamic instructor ID
+
     useEffect(() => {
-        const fetchAnalytics = async () => {
+        const fetchInstructorAnalytics = async () => {
             try {
                 setLoading(true);
-                
-                // Get the token from localStorage (adjust this based on how you store tokens)
-                const token = localStorage.getItem('token');
-                
+
+                // Get the token from localStorage
+                const token = localStorage.getItem('auth_token') || localStorage.getItem('token');
+
                 if (!token) {
                     setError('Authentication token not found');
                     setLoading(false);
                     return;
                 }
-                
-                console.log('Fetching analytics from:', 'http://127.0.0.1:8000/api/admins/analytics');
-                
-                const response = await axios.get('http://127.0.0.1:8000/api/admins/analytics', {
+
+                console.log('Fetching instructor analytics from:', `http://127.0.0.1:8000/api/instructors/analytics/${instructorId}`);
+
+                const response = await axios.get(`http://127.0.0.1:8000/api/instructors/analytics/${instructorId}`, {
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
                         'Authorization': `Bearer ${token}`,
                     }
                 });
-                
-                console.log('Analytics response:', response.data);
+
+                console.log('Instructor analytics response:', response.data);
                 setAnalytics(response.data);
                 setError(null);
             } catch (err) {
                 console.error('Full error object:', err);
                 console.error('Error response:', err.response?.data);
                 console.error('Error status:', err.response?.status);
-                console.error('Error message:', err.message);
-                
+
                 let errorMessage = 'Failed to load analytics data';
                 if (err.response?.status === 401) {
                     errorMessage = 'Unauthorized - Please log in again';
                 } else if (err.response?.status === 403) {
-                    errorMessage = 'Access forbidden - Admin privileges required';
+                    errorMessage = 'Access forbidden - Instructor privileges required';
                 } else if (err.response?.status === 404) {
-                    errorMessage = 'Analytics endpoint not found (404)';
+                    errorMessage = 'Instructor not found';
                 } else if (err.response?.status === 500) {
                     errorMessage = 'Server error (500)';
                 } else if (err.code === 'NETWORK_ERROR' || err.message.includes('Network Error')) {
                     errorMessage = 'Network error - Check if Laravel server is running';
                 }
-                
+
                 setError(errorMessage);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchAnalytics();
-    }, []);
+        fetchInstructorAnalytics();
+    }, [instructorId]);
 
     const StatCard = ({ title, count, icon, bgColor }) => (
-        <div className="col-xl-3 col-md-6 mb-4">
+        <div className="col-xl-6 col-md-6 mb-4">
             <div className="card border-0 shadow-sm h-100">
                 <div className="card-body">
                     <div className="d-flex justify-content-between align-items-center">
@@ -80,7 +81,7 @@ function AdminHome() {
                                 {loading ? '...' : count}
                             </div>
                         </div>
-                        <div className={`fa fa-${icon} fa-2x text-gray-300`} style={{ fontSize: '2em', color: bgColor }}></div>
+                        <div className={`fa fa-${icon} fa-2x`} style={{ fontSize: '2em', color: bgColor }}></div>
                     </div>
                 </div>
             </div>
@@ -89,7 +90,7 @@ function AdminHome() {
 
     return (
         <>
-            <AdminSidebar />
+            <InstructorSidebar />
             <div id="main-container" className="container-fluid py-4" style={{ marginLeft: '260px', maxWidth: 'calc(100% - 280px)' }}>
                 <div className="row mb-4">
                     <div className="col">
@@ -99,6 +100,7 @@ function AdminHome() {
                                     <div className="d-flex align-items-center">
                                         <div>
                                             <h1 className="m-0 fs-3 fw-bold text-white">Welcome Back</h1>
+                                            <p className="m-0 text-white-50">Here's your content overview</p>
                                         </div>
                                     </div>
                                 </div>
@@ -120,34 +122,47 @@ function AdminHome() {
 
                 {/* Analytics Cards */}
                 <div className="row">
-                    <StatCard 
-                        title="Total Users" 
-                        count={analytics.users} 
-                        icon="users" 
-                        bgColor="#4e73df" 
+                    <StatCard
+                        title="My Courses"
+                        count={analytics.courses}
+                        icon="graduation-cap"
+                        bgColor="#4e73df"
                     />
-                    <StatCard 
-                        title="Instructors" 
-                        count={analytics.instructors} 
-                        icon="chalkboard-teacher" 
-                        bgColor="#1cc88a" 
+                    <StatCard
+                        title="My Blogs"
+                        count={analytics.blogs}
+                        icon="blog"
+                        bgColor="#1cc88a"
                     />
-                    <StatCard 
-                        title="Published Blogs" 
-                        count={analytics.blogs} 
-                        icon="blog" 
-                        bgColor="#36b9cc" 
-                    />
-                    <StatCard 
-                        title="Available Courses" 
-                        count={analytics.courses} 
-                        icon="graduation-cap" 
-                        bgColor="#f6c23e" 
-                    />
+                </div>
+
+                {/* Additional Quick Actions */}
+                <div className="row mt-4">
+                    <div className="col">
+                        <div className="card border-0 shadow-sm">
+                            <div className="card-header bg-white">
+                                <h6 className="m-0 font-weight-bold text-primary">Quick Actions</h6>
+                            </div>
+                            <div className="card-body">
+                                <div className="row">
+                                    <div className="col-md-6 mb-2">
+                                        <Link to='/instructor/courses/create' className="btn btn-primary btn-sm w-100">
+                                            <i className="fa fa-plus me-2"></i>Create New Course
+                                        </Link>
+                                    </div>
+                                    <div className="col-md-6 mb-2">
+                                        <Link to='/instructor/blogs/create' className="btn btn-success btn-sm w-100">
+                                            <i className="fa fa-edit me-2"></i>Create New Blog
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </>
     );
 }
 
-export default AdminHome;
+export default InstructorHomePage;

@@ -1,0 +1,379 @@
+@import url('../ColorPalete.css');
+
+/* Luxury Blog Cards - Matching Course Card Design */
+.blogs-page {
+    background-color: var(--color-light);
+    min-height: 100vh;
+    padding: 60px 0;
+}
+
+.blog-card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px var(--shadow);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    background-color: white;
+    position: relative;
+    margin-bottom: 30px;
+    border-top: 4px solid transparent;
+}
+
+.blog-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px var(--hover-shadow);
+}
+
+.blog-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-primary);
+    z-index: 2;
+}
+
+.blog-thumbnail {
+    height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.blog-thumbnail::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(to top, var(--overlay-dark), transparent);
+}
+
+.blog-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.blog-card:hover .blog-thumbnail img {
+    transform: scale(1.05);
+}
+
+.thumbnail-placeholder {
+    font-size: 72px;
+    color: var(--text-light);
+    font-weight: bold;
+    opacity: 0.8;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-body {
+    padding: 25px;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+.blog-card:hover .card-body {
+    background-color: var(--bg-primary-light);
+}
+
+.blog-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.4;
+    color: var(--text-primary);
+    position: relative;
+    padding-bottom: 12px;
+}
+
+.blog-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background-color: var(--color-secondary);
+}
+
+.blog-description {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.view-details {
+    font-weight: 600;
+    border-radius: 30px;
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+    background: white;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.view-details::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: var(--gradient-primary);
+    transition: width 0.3s ease;
+    z-index: -1;
+}
+
+.view-details:hover {
+    color: var(--text-light);
+    border-color: var(--color-primary);
+    text-decoration: none;
+}
+
+.view-details:hover::before {
+    width: 100%;
+}
+
+/* Badge styling */
+.badge {
+    padding: 8px 15px;
+    font-weight: 600;
+    border-radius: 30px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.badge.bg-success {
+    background-color: var(--color-success) !important;
+    color: white !important;
+}
+
+.badge.bg-primary {
+    background: var(--gradient-primary) !important;
+    color: white !important;
+}
+
+.badge.bg-danger {
+    background-color: var(--color-error) !important;
+    color: white !important;
+}
+
+.badge.bg-secondary {
+    background-color: var(--color-dark) !important;
+    color: white !important;
+}
+
+.badge.bg-warning {
+    background-color: var(--color-secondary) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Background gradient classes */
+.bg-gradient-primary {
+    background: var(--gradient-primary) !important;
+}
+
+.bg-gradient-secondary {
+    background: var(--gradient-secondary) !important;
+}
+
+.bg-gradient-accent {
+    background: var(--gradient-accent) !important;
+}
+
+.bg-dark {
+    background-color: var(--color-dark) !important;
+}
+
+/* Featured Ribbon */
+.featured-ribbon {
+    position: absolute;
+    top: 15px;
+    right: -30px;
+    width: 120px;
+    padding: 5px 0;
+    background-color: var(--color-secondary);
+    color: var(--text-primary);
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.8rem;
+    transform: rotate(45deg);
+    z-index: 3;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Loading and Error States */
+.loading-container {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-container .spinner-border {
+    width: 3rem;
+    height: 3rem;
+    color: var(--color-primary) !important;
+}
+
+.error-container {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+.error-container .alert-danger {
+    background-color: rgba(168, 58, 58, 0.1);
+    color: var(--color-error);
+    border-color: rgba(168, 58, 58, 0.2);
+}
+
+/* Empty state */
+.empty-blogs {
+    padding: 80px 0;
+}
+
+.empty-blogs h3 {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.empty-blogs p {
+    color: var(--text-muted);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Header styling */
+.display-4 {
+    color: var(--text-primary);
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.display-4::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: var(--color-secondary);
+}
+
+.blog-subtitle {
+    max-width: 600px;
+    margin: 0 auto 40px;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+/* Blog Meta Styling */
+.blog-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 15px;
+}
+
+.blog-date {
+    color: var(--color-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.blog-id {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    background: var(--bg-primary-light);
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+}
+
+/* Blog Content Preview */
+.blog-content-preview {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Pagination Styles - Matching Course Design */
+.pagination {
+    margin-top: 40px;
+}
+
+.page-link {
+    background: white;
+    border: 2px solid var(--border-light);
+    color: var(--text-secondary);
+    padding: 0.75rem 1rem;
+    margin: 0 0.25rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.page-link:hover {
+    background: var(--color-secondary);
+    border-color: var(--color-secondary);
+    color: var(--text-light);
+    transform: translateY(-2px);
+}
+
+.page-item.active .page-link {
+    background: var(--gradient-primary);
+    border-color: var(--color-primary);
+    color: var(--text-light);
+}
+
+.page-item.disabled .page-link {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .blog-card {
+        margin-bottom: 25px;
+    }
+    
+    .blogs-page {
+        padding: 30px 0;
+    }
+    
+    .blog-thumbnail {
+        height: 200px;
+    }
+    
+    .blog-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
